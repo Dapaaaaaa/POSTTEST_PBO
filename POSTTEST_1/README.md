@@ -29,7 +29,7 @@ POSTTEST_1/
 
 ---
 
-## 📦 Class yang Digunakan
+## Class yang Digunakan
 
 ### 1. Class Menu
 Menyimpan data menu makanan/minuman restoran.
