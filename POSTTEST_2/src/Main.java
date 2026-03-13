@@ -1,64 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//   CLASS MENU
-class Menu {
-    int id;
-    String namaMenu;
-    String kategori;
-    double harga;
-    boolean tersedia;
-
-    Menu(int id, String namaMenu, String kategori, double harga, boolean tersedia) {
-        this.id = id;
-        this.namaMenu = namaMenu;
-        this.kategori = kategori;
-        this.harga = harga;
-        this.tersedia = tersedia;
-    }
-}
-
-//   CLASS MEJA
-class Meja {
-    int nomorMeja;
-    int kapasitas;
-    String lokasi;
-    boolean terpesan;
-
-    Meja(int nomorMeja, int kapasitas, String lokasi, boolean terpesan) {
-        this.nomorMeja = nomorMeja;
-        this.kapasitas = kapasitas;
-        this.lokasi = lokasi;
-        this.terpesan = terpesan;
-    }
-}
-
-//    CLASS RESERVASI
-class Reservasi {
-    int idReservasi;
-    String namaPelanggan;
-    String noTelepon;
-    int nomorMeja;
-    String tanggal;
-    String jamReservasi;
-    int jumlahTamu;
-    String status;
-
-    Reservasi(int idReservasi, String namaPelanggan, String noTelepon,
-              int nomorMeja, String tanggal, String jamReservasi,
-              int jumlahTamu, String status) {
-        this.idReservasi = idReservasi;
-        this.namaPelanggan = namaPelanggan;
-        this.noTelepon = noTelepon;
-        this.nomorMeja = nomorMeja;
-        this.tanggal = tanggal;
-        this.jamReservasi = jamReservasi;
-        this.jumlahTamu = jumlahTamu;
-        this.status = status;
-    }
-}
-
-//   CLASS MAIN - Program Utama
 public class Main {
 
     static ArrayList<Menu> daftarMenu = new ArrayList<>();
@@ -93,9 +35,8 @@ public class Main {
         scanner.close();
     }
 
-    // ==================== MENU UTAMA ====================
     static void tampilMenuUtama() {
-        System.out.println("       MENU UTAMA           ");
+        System.out.println("\n       MENU UTAMA           ");
         System.out.println("--------------------------------");
         System.out.println("  1. Manajemen Menu Makanan   ");
         System.out.println("  2. Manajemen Meja           ");
@@ -103,11 +44,11 @@ public class Main {
         System.out.println("  0. Keluar Program           ");
     }
 
-    //         MENU MAKANAN - CRUD
+    // ==================== MENU MAKANAN ====================
     static void menuManajemenMenu() {
         boolean kembali = false;
         while (!kembali) {
-            System.out.println("    MANAJEMEN MENU MAKANAN    ");
+            System.out.println("\n    MANAJEMEN MENU MAKANAN    ");
             System.out.println("--------------------------------");
             System.out.println("  1. Tampilkan Semua Menu     ");
             System.out.println("  2. Tambah Menu Baru         ");
@@ -135,15 +76,16 @@ public class Main {
             System.out.println("Belum ada data menu.");
             return;
         }
+        System.out.println("--------------------------------------------------------------------------");
         System.out.println("| ID   | Nama Menu            | Kategori   | Harga          | Status     |");
         System.out.println("--------------------------------------------------------------------------");
         for (Menu m : daftarMenu) {
             System.out.printf("| %-4d | %-20s | %-10s | Rp%-12.0f | %-10s |\n",
-                    m.id,
-                    m.namaMenu,
-                    m.kategori,
-                    m.harga,
-                    m.tersedia ? "Tersedia" : "Habis"
+                    m.getId(),
+                    m.getNamaMenu(),
+                    m.getKategori(),
+                    m.getHarga(),
+                    m.isTersedia() ? "Tersedia" : "Habis"
             );
         }
         System.out.println("--------------------------------------------------------------------------");
@@ -189,25 +131,25 @@ public class Main {
             return;
         }
 
-        System.out.println("\n--- UPDATE MENU: " + target.namaMenu + " ---");
+        System.out.println("\n--- UPDATE MENU: " + target.getNamaMenu() + " ---");
         System.out.println("(Tekan Enter untuk melewati)");
         scanner.nextLine();
 
-        System.out.print("Nama Menu baru [" + target.namaMenu + "]: ");
+        System.out.print("Nama Menu baru [" + target.getNamaMenu() + "]: ");
         String nama = scanner.nextLine();
-        if (!nama.isEmpty()) target.namaMenu = nama;
+        if (!nama.isEmpty()) target.setNamaMenu(nama);
 
-        System.out.print("Kategori baru [" + target.kategori + "] (Makanan/Minuman/Dessert): ");
+        System.out.print("Kategori baru [" + target.getKategori() + "] (Makanan/Minuman/Dessert): ");
         String kat = scanner.nextLine();
-        if (!kat.isEmpty()) target.kategori = kat;
+        if (!kat.isEmpty()) target.setKategori(kat);
 
-        System.out.print("Harga baru [" + target.harga + "] (kosongkan=skip): ");
+        System.out.print("Harga baru [" + target.getHarga() + "] (kosongkan=skip): ");
         String hargaStr = scanner.nextLine();
-        if (!hargaStr.isEmpty()) target.harga = Double.parseDouble(hargaStr);
+        if (!hargaStr.isEmpty()) target.setHarga(Double.parseDouble(hargaStr));
 
-        System.out.print("Status tersedia [" + (target.tersedia ? "Ya" : "Tidak") + "] (1=Ya/0=Tidak/Enter=skip): ");
+        System.out.print("Status tersedia [" + (target.isTersedia() ? "Ya" : "Tidak") + "] (1=Ya/0=Tidak/Enter=skip): ");
         String statusStr = scanner.nextLine();
-        if (!statusStr.isEmpty()) target.tersedia = statusStr.equals("1");
+        if (!statusStr.isEmpty()) target.setTersedia(statusStr.equals("1"));
 
         System.out.println("Menu berhasil diupdate!");
     }
@@ -224,7 +166,7 @@ public class Main {
             return;
         }
 
-        System.out.print("Yakin hapus \"" + target.namaMenu + "\"? (y/n): ");
+        System.out.print("Yakin hapus \"" + target.getNamaMenu() + "\"? (y/n): ");
         scanner.nextLine();
         String konfirmasi = scanner.nextLine();
         if (konfirmasi.equalsIgnoreCase("y")) {
@@ -246,10 +188,10 @@ public class Main {
         System.out.println("--------------------------------------------------------------------------");
         boolean ketemu = false;
         for (Menu m : daftarMenu) {
-            if (m.namaMenu.toLowerCase().contains(keyword)) {
+            if (m.getNamaMenu().toLowerCase().contains(keyword)) {
                 System.out.printf("| %-4d | %-20s | %-10s | Rp%-12.0f | %-10s |\n",
-                        m.id, m.namaMenu, m.kategori,
-                        m.harga, m.tersedia ? "Tersedia" : "Habis");
+                        m.getId(), m.getNamaMenu(), m.getKategori(),
+                        m.getHarga(), m.isTersedia() ? "Tersedia" : "Habis");
                 ketemu = true;
             }
         }
@@ -259,16 +201,16 @@ public class Main {
 
     static Menu cariMenuById(int id) {
         for (Menu m : daftarMenu) {
-            if (m.id == id) return m;
+            if (m.getId() == id) return m;
         }
         return null;
     }
 
-    //           MEJA - CRUD
+    // ==================== MEJA ====================
     static void menuManajemenMeja() {
         boolean kembali = false;
         while (!kembali) {
-            System.out.println("      MANAJEMEN MEJA          ");
+            System.out.println("\n      MANAJEMEN MEJA          ");
             System.out.println("--------------------------------");
             System.out.println("  1. Tampilkan Semua Meja     ");
             System.out.println("  2. Tambah Meja Baru         ");
@@ -301,10 +243,10 @@ public class Main {
         System.out.println("-------------------------------------------------");
         for (Meja m : daftarMeja) {
             System.out.printf("| %-6d | %-10d | %-10s | %-10s |\n",
-                    m.nomorMeja,
-                    m.kapasitas,
-                    m.lokasi,
-                    m.terpesan ? "Terpesan" : "Tersedia"
+                    m.getNomorMeja(),
+                    m.getKapasitas(),
+                    m.getLokasi(),
+                    m.isTerpesan() ? "Terpesan" : "Tersedia"
             );
         }
         System.out.println("-------------------------------------------------");
@@ -349,21 +291,21 @@ public class Main {
         }
 
         System.out.println("\n--- UPDATE MEJA NO. " + nomor + " ---");
-        int kapasitasBaru = bacaAngka("Kapasitas baru [" + target.kapasitas + "] (0=skip): ");
-        if (kapasitasBaru > 0) target.kapasitas = kapasitasBaru;
+        int kapasitasBaru = bacaAngka("Kapasitas baru [" + target.getKapasitas() + "] (0=skip): ");
+        if (kapasitasBaru > 0) target.setKapasitas(kapasitasBaru);
 
         System.out.println("Pilih Lokasi baru: 1.Indoor  2.Outdoor  3.VIP  0.Skip");
         int lokPilih = bacaAngka("Pilihan: ");
         if (lokPilih > 0) {
             switch (lokPilih) {
-                case 1: target.lokasi = "Indoor"; break;
-                case 2: target.lokasi = "Outdoor"; break;
-                case 3: target.lokasi = "VIP"; break;
+                case 1: target.setLokasi("Indoor"); break;
+                case 2: target.setLokasi("Outdoor"); break;
+                case 3: target.setLokasi("VIP"); break;
             }
         }
 
         System.out.print("Status (1=Terpesan / 0=Tersedia): ");
-        target.terpesan = bacaAngka("") == 1;
+        target.setTerpesan(bacaAngka("") == 1);
 
         System.out.println("Data meja berhasil diupdate!");
     }
@@ -391,9 +333,9 @@ public class Main {
         System.out.println("-------------------------------------------------");
         boolean ada = false;
         for (Meja m : daftarMeja) {
-            if (!m.terpesan) {
+            if (!m.isTerpesan()) {
                 System.out.printf("| %-6d | %-10d | %-10s | %-10s |\n",
-                        m.nomorMeja, m.kapasitas, m.lokasi, "Tersedia");
+                        m.getNomorMeja(), m.getKapasitas(), m.getLokasi(), "Tersedia");
                 ada = true;
             }
         }
@@ -403,16 +345,16 @@ public class Main {
 
     static Meja cariMejaByNomor(int nomor) {
         for (Meja m : daftarMeja) {
-            if (m.nomorMeja == nomor) return m;
+            if (m.getNomorMeja() == nomor) return m;
         }
         return null;
     }
 
-    //         RESERVASI - CRUD
+    // ==================== RESERVASI ====================
     static void menuManajemenReservasi() {
         boolean kembali = false;
         while (!kembali) {
-            System.out.println("    MANAJEMEN RESERVASI       ");
+            System.out.println("\n    MANAJEMEN RESERVASI       ");
             System.out.println("------------------------------");
             System.out.println("  1. Tampilkan Semua Reservasi");
             System.out.println("  2. Buat Reservasi Baru      ");
@@ -445,14 +387,14 @@ public class Main {
         System.out.println("--------------------------------------------------------------------------------------------------");
         for (Reservasi r : daftarReservasi) {
             System.out.printf("| %-4d | %-15s | %-13s | %-5d | %-12s | %-6s | %-6d | %-12s |\n",
-                    r.idReservasi,
-                    r.namaPelanggan,
-                    r.noTelepon,
-                    r.nomorMeja,
-                    r.tanggal,
-                    r.jamReservasi,
-                    r.jumlahTamu,
-                    r.status
+                    r.getIdReservasi(),
+                    r.getNamaPelanggan(),
+                    r.getNoTelepon(),
+                    r.getNomorMeja(),
+                    r.getTanggal(),
+                    r.getJamReservasi(),
+                    r.getJumlahTamu(),
+                    r.getStatus()
             );
         }
         System.out.println("--------------------------------------------------------------------------------------------------");
@@ -477,7 +419,7 @@ public class Main {
             System.out.println("Meja tidak ditemukan!");
             return;
         }
-        if (meja.terpesan) {
+        if (meja.isTerpesan()) {
             System.out.println("Maaf, meja ini sudah terpesan!");
             return;
         }
@@ -495,7 +437,7 @@ public class Main {
                 reservasiIdCounter++, nama, telepon,
                 nomorMeja, tanggal, jam, jumlahTamu, "Dikonfirmasi"
         ));
-        meja.terpesan = true;
+        meja.setTerpesan(true);
 
         System.out.println("Reservasi berhasil dibuat!");
         System.out.println("  ID Reservasi : " + (reservasiIdCounter - 1));
@@ -526,25 +468,25 @@ public class Main {
         int statusPilih = bacaAngka("Pilihan: ");
         if (statusPilih > 0) {
             switch (statusPilih) {
-                case 1: target.status = "Menunggu"; break;
-                case 2: target.status = "Dikonfirmasi"; break;
+                case 1: target.setStatus("Menunggu"); break;
+                case 2: target.setStatus("Dikonfirmasi"); break;
                 case 3:
-                    target.status = "Selesai";
-                    Meja meja = cariMejaByNomor(target.nomorMeja);
-                    if (meja != null) meja.terpesan = false;
-                    System.out.println("  Meja no." + target.nomorMeja + " sudah dibebaskan.");
+                    target.setStatus("Selesai");
+                    Meja meja = cariMejaByNomor(target.getNomorMeja());
+                    if (meja != null) meja.setTerpesan(false);
+                    System.out.println("  Meja no." + target.getNomorMeja() + " sudah dibebaskan.");
                     break;
                 case 4:
-                    target.status = "Dibatalkan";
-                    Meja mejaBatal = cariMejaByNomor(target.nomorMeja);
-                    if (mejaBatal != null) mejaBatal.terpesan = false;
-                    System.out.println("  Meja no." + target.nomorMeja + " sudah dibebaskan.");
+                    target.setStatus("Dibatalkan");
+                    Meja mejaBatal = cariMejaByNomor(target.getNomorMeja());
+                    if (mejaBatal != null) mejaBatal.setTerpesan(false);
+                    System.out.println("  Meja no." + target.getNomorMeja() + " sudah dibebaskan.");
                     break;
             }
         }
 
-        int tamuBaru = bacaAngka("Jumlah tamu baru [" + target.jumlahTamu + "] (0=skip): ");
-        if (tamuBaru > 0) target.jumlahTamu = tamuBaru;
+        int tamuBaru = bacaAngka("Jumlah tamu baru [" + target.getJumlahTamu() + "] (0=skip): ");
+        if (tamuBaru > 0) target.setJumlahTamu(tamuBaru);
 
         System.out.println("Reservasi berhasil diupdate!");
     }
@@ -561,13 +503,13 @@ public class Main {
             return;
         }
 
-        System.out.print("Yakin batalkan reservasi \"" + target.namaPelanggan + "\"? (y/n): ");
+        System.out.print("Yakin batalkan reservasi \"" + target.getNamaPelanggan() + "\"? (y/n): ");
         scanner.nextLine();
         String konfirmasi = scanner.nextLine();
 
         if (konfirmasi.equalsIgnoreCase("y")) {
-            Meja meja = cariMejaByNomor(target.nomorMeja);
-            if (meja != null) meja.terpesan = false;
+            Meja meja = cariMejaByNomor(target.getNomorMeja());
+            if (meja != null) meja.setTerpesan(false);
             daftarReservasi.remove(target);
             System.out.println("Reservasi berhasil dibatalkan!");
         } else {
@@ -586,11 +528,11 @@ public class Main {
         System.out.println("--------------------------------------------------------------------------------------------------");
         boolean ketemu = false;
         for (Reservasi r : daftarReservasi) {
-            if (r.namaPelanggan.toLowerCase().contains(keyword)) {
+            if (r.getNamaPelanggan().toLowerCase().contains(keyword)) {
                 System.out.printf("| %-4d | %-15s | %-13s | %-5d | %-12s | %-6s | %-6d | %-12s |\n",
-                        r.idReservasi, r.namaPelanggan, r.noTelepon,
-                        r.nomorMeja, r.tanggal, r.jamReservasi,
-                        r.jumlahTamu, r.status);
+                        r.getIdReservasi(), r.getNamaPelanggan(), r.getNoTelepon(),
+                        r.getNomorMeja(), r.getTanggal(), r.getJamReservasi(),
+                        r.getJumlahTamu(), r.getStatus());
                 ketemu = true;
             }
         }
@@ -600,12 +542,12 @@ public class Main {
 
     static Reservasi cariReservasiById(int id) {
         for (Reservasi r : daftarReservasi) {
-            if (r.idReservasi == id) return r;
+            if (r.getIdReservasi() == id) return r;
         }
         return null;
     }
 
-    //       DATA AWAL
+    // ==================== DATA AWAL ====================
     static void isiDataAwal() {
         daftarMenu.add(new Menu(menuIdCounter++, "Nasi Goreng Spesial", "Makanan", 35000, true));
         daftarMenu.add(new Menu(menuIdCounter++, "Mie Ayam Bakso",      "Makanan", 28000, true));
@@ -626,7 +568,7 @@ public class Main {
         ));
     }
 
-    //       UTILITY: Baca Input Angka
+    // ==================== UTILITY ====================
     static int bacaAngka(String pesan) {
         while (true) {
             try {
