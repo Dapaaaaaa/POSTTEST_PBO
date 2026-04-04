@@ -25,36 +25,32 @@ POSTTEST_1/
 │           └── restaurant/
 │               ├── Main.java         ← Program utama + Logika CRUDnya (Main) 
                 ├── Meja.java         ← Kelas Meja (Enkasulasi + getter dan setter)
-                ├── Menu.java         ← Kelas Menu (Enkasulasi + getter dan setter)
+                ├── Menu.java         ← Kelas Menu (Inheritance dan parent dari Subclass)
+                ├── MenuMakanan.java  ← Kelas MenuMakanan (Subclass dari Menu.java)
+                ├── MenuMinuman.java  ← Kelas MenuMinuman (Subclass dari Menu.java)
+                ├── MenuDessert.java  ← Kelas MenuDessert (Subclass dari Menu.java)
                 ├── Reservasi.java    ← Kelas Reservasi (Enkasulasi + getter dan setter)
 └── README.md                         ← Laporan
 ```
 
 ---
 
-## Konsep OOP Yang Diterapkan
-### 1. Enkapsulasi
-Field yang ada pada kelas "Menu", "Meja", dan "Reservasi" menggunakan access modifier
-"private" sehingga tidak akan bisa di akses dari luar kelas.
+## Konsep Inheritance Yang Diterapkan
+### 1. Parent (Hierarki)
+Menjadikan file Menu.java sebagai _parent class_ dari beberapa _subclass___,
+dengan atribut seperti id, nama menu, harga, dan status dari menu.
 
-**Access Modifier**
-Terdapat 2 Access Modifier yang digunakan, yaitu:
-1. "Private" → Digunakan pada semua field didalam kelas (Menu,Meja, dan Reservasi).
-2. "Public" → Digunakan pada semua method seperti *getter*, *setter*, dan *method* di file Main.
+### 2. Subclass
+Dari file Menu.java kita bagi menjadi 3 file _Subclass_, Yaitu :
+1. MenuMakanan.java
+2. MenuMinuman.java
+3. MenuDessert
 
-### 2. Getter & Setter
-Saat ini semua kelas sudah menggunakan method getter & setter untuk mengakses 
-dan untuk mengubah nilai field secara terkendali.
+Setiap masing-masing _Subclass_ memiliki jenis menu yang berbeda
 
----
-## Contoh pada class Menu
-```java
-// Getter
-public String getNamaMenu() { return namaMenu; }
- 
-// Setter
-public void setNamaMenu(String namaMenu) { this.namaMenu = namaMenu; }
-``` 
+### 3. Metode Override
+Masing-masing _Subclass_ melakukan metode ini untuk method kategori,
+sehingga nilai kategori tetap benar dan sesuai nama file _Subclass_
 
 ---
 ## Fitur yang Digunakan
