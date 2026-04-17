@@ -10,8 +10,14 @@ public class Main {
     static int menuIdCounter = 1;
     static int reservasiIdCounter = 1;
 
+//    Deklarasi objek ManajemenMenu dengan impelements InterfaceManajemen
+    static ManajemenMenu manajemenMenu;
+
     public static void main(String[] args) {
         isiDataAwal();
+
+//        Inisialisasi data ManajemenMenu dengan daftarMenu yang sudah diisi di awal
+        manajemenMenu = new ManajemenMenu(daftarMenu);
 
         System.out.println("   SELAMAT DATANG DI SISTEM MANAJEMEN RESTORAN         ");
         System.out.println("          \"Restoran Nusantara Indah\"                  ");
@@ -71,28 +77,9 @@ public class Main {
     }
 
     static void tampilSemuaMenu() {
-        System.out.println("\n========== DAFTAR MENU RESTORAN ==========");
-        if (daftarMenu.isEmpty()) {
-            System.out.println("Belum ada data menu.");
-            return;
-        }
-        System.out.println("--------------------------------------------------------------------------");
-        System.out.println("| ID   | Nama Menu            | Kategori   | Harga          | Status     |");
-        System.out.println("--------------------------------------------------------------------------");
-
-        for (Menu m : daftarMenu) {
-            System.out.printf("| %-4d | %-20s | %-10s | Rp%-12.0f | %-10s |\n",
-                    m.getId(),
-                    m.getNamaMenu(),
-                    m.getKategori(),
-                    m.getHarga(),
-                    m.isTersedia() ? "Tersedia" : "Habis"
-            );
-        }
-
-
-        System.out.println("--------------------------------------------------------------------------");
-        System.out.println("Total: " + daftarMenu.size() + " menu");
+//        Kan sebelumya tu disini logikanya, sekarang dipindah ke manajemenMenu.tampilkanSemua yang
+//        dia tu ngambil dari InterfaceManajemen
+        manajemenMenu.tampilkanSemua(daftarMenu);
     }
 
     static void tambahMenu() {
@@ -134,8 +121,12 @@ public class Main {
                 menuBaru = new MenuMakanan(menuIdCounter++, nama, harga, tersedia);
         }
 
-        daftarMenu.add(menuBaru);
-        System.out.println("Menu \"" + nama + "\" berhasil ditambahkan!");
+//        Kalau sebelumnya logika add nya disini, sekarang melalui manajemenMenu.tambahData
+//        Sama kek diatas merupakan ngambil dari InterfaceManajemen
+        manajemenMenu.tambahData(menuBaru);
+
+//        Baru tampilkan info dari abstract getInfoTambahan();
+        System.out.println("Info: "+ menuBaru.getInfoTambahan());
     }
 
     static void updateMenu() {
@@ -185,10 +176,11 @@ public class Main {
         scanner.nextLine();
         String konfirmasi = scanner.nextLine();
         if (konfirmasi.equalsIgnoreCase("y")) {
-            daftarMenu.remove(target);
-            System.out.println("Menu berhasil dihapus!");
+
+//            Sebelumnya disini sekarang dipindah ke manajemenMenu.hapusData(id)
+            manajemenMenu.hapusData(id);
         } else {
-            System.out.println("Penghapusan dibatalkan.");
+            System.out.println("Penghapusan dibatalkan");
         }
     }
 
@@ -197,21 +189,8 @@ public class Main {
         System.out.print("Masukkan nama menu yang dicari: ");
         String keyword = scanner.nextLine().toLowerCase();
 
-        System.out.println("\n--- HASIL PENCARIAN: \"" + keyword + "\" ---");
-        System.out.println("--------------------------------------------------------------------------");
-        System.out.println("| ID   | Nama Menu            | Kategori   | Harga          | Status     |");
-        System.out.println("--------------------------------------------------------------------------");
-        boolean ketemu = false;
-        for (Menu m : daftarMenu) {
-            if (m.getNamaMenu().toLowerCase().contains(keyword)) {
-                System.out.printf("| %-4d | %-20s | %-10s | Rp%-12.0f | %-10s |\n",
-                        m.getId(), m.getNamaMenu(), m.getKategori(),
-                        m.getHarga(), m.isTersedia() ? "Tersedia" : "Habis");
-                ketemu = true;
-            }
-        }
-        System.out.println("--------------------------------------------------------------------------");
-        if (!ketemu) System.out.println("Menu tidak ditemukan.");
+//        Kalau sebelumnya logikanya disini, dipindah ke manajemenMenu.cariData
+        manajemenMenu.cariData(keyword);
     }
 
     static Menu cariMenuById(int id) {

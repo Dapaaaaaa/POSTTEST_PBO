@@ -1,4 +1,4 @@
-public class Menu {
+public abstract class Menu {
     protected int id;
     protected String namaMenu;
     protected double hargaMenu;
@@ -40,10 +40,6 @@ public void updateMenu(String namaBaru, Double hargaBaru) {
 //    Overloading 2 untuk update status dari menu baru
     public void updateMenu(double hargaBaru) {
         this.hargaMenu = hargaBaru;
-    }
-
-    public String getKategori() {
-        return "Umum";
     }
 
     public int getId() {return id;}
